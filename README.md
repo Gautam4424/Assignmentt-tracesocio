@@ -74,7 +74,7 @@ docker build -t gautam4424/node_app .
 ### ▶️ Run the container
 
 ```bash
-docker run -p 3000:3000 gautam4424/node_app
+docker run -p 3000:3000 --env-file .env gautam4424/node_app 
 ```
 
 ---
@@ -273,14 +273,7 @@ HOST=0.0.0.0
 
 ---
 
-## 📄 License
-
-MIT License
-
----
-
 ## 🙋‍♂️ Author
 
 **Gautam Sachdeva**
 
-For questions or support, please open an issue in this repository.
