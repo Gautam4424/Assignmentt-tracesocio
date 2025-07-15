@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  app:
+    image: gautam4424/node_app
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    networks:
+      - my_network
+  
+networks:
+  my_network:
+    driver: bridge
