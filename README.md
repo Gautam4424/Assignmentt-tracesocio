@@ -74,7 +74,7 @@ docker build -t gautam4424/node_app .
 ### ▶️ Run the container
 
 ```bash
-docker run -p 3000:3000 --env-file .env gautam4424/node_app
+docker run -p 3000:3000 gautam4424/node_app
 ```
 
 ---
@@ -113,22 +113,74 @@ node_app/
 helm install node-app ./node_app
 ```
 
-```
-To upgrade:
+**ConfigMap Usage:**
+The Helm chart includes a ConfigMap for managing application configuration. You can customize values in `values.yaml`:
 
+```yaml
+# values.yaml
+config:
+  PORT: "3000"
+  debug: "true"
+  HOST: "0.0.0.0"
+  NODE_ENV: "production"
+```
+
+**Helm Management Commands:**
 ```bash
+# Upgrade deployment
 helm upgrade node-app ./node_app
-```
 
-To uninstall:
-
-```bash
+# Uninstall deployment
 helm uninstall node-app
+
+# View deployment status
+helm status node-app
+
+# List all releases
+helm list
 ```
 
 **View ConfigMap:**
 ```bash
 kubectl get configmap node-app-config -o yaml
+```
+
+### 🚀 Access the Application
+
+**1. Check Service Status:**
+```bash
+kubectl get svc
+```
+
+**2. Get NodePort Details:**
+```bash
+kubectl get svc node-app -o wide
+```
+
+**3. Access the Application:**
+The service will be exposed on a NodePort between `30000-32767`. Use the port shown in the output:
+
+```bash
+# Example if NodePort is 31234
+curl http://localhost:31234/api
+
+# Or test with POST request
+curl -X POST http://localhost:31234/api \
+  -H "Content-Type: application/json" \
+  -d '{"test": "data"}'
+```
+
+**4. Alternative Access Methods:**
+```bash
+# Port forwarding (if NodePort is not accessible)
+kubectl port-forward svc/node-app 3000:3000
+curl http://localhost:3000/api
+
+# Get pod details
+kubectl get pods -l app=node-app
+
+# Check pod logs
+kubectl logs -l app=node-app
 ```
 
 ---
@@ -219,6 +271,11 @@ HOST=0.0.0.0
 
 **Note:** When deployed via Helm, these variables are managed through ConfigMap and can be customized in the `values.yaml` file.
 
+---
+
+## 📄 License
+
+MIT License
 
 ---
 
