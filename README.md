@@ -7,9 +7,6 @@ A simple Node.js API server with support for containerization using **Docker**, 
 ## 📦 Features
 
 - Express-based API with request debugging
-- Environment variable configuration with dotenv
-- Optional Morgan logging for debugging
-- Request headers, method, and body inspection
 - Dockerized for easy deployment
 - Docker Compose for local development
 - Helm chart for Kubernetes deployment
@@ -42,7 +39,7 @@ A simple Node.js API server with support for containerization using **Docker**, 
 
 **Prerequisites:**
 ```bash
-npm install express dotenv morgan
+npm install 
 ```
 
 **Run the application:**
@@ -77,7 +74,7 @@ docker build -t gautam4424/node_app .
 ### ▶️ Run the container
 
 ```bash
-docker run -p 3000:3000 gautam4424/node_app
+docker run -p 3000:3000 --env-file .env gautam4424/node_app
 ```
 
 ---
@@ -115,9 +112,6 @@ node_app/
 # Inside project root
 helm install node-app ./node_app
 ```
-
-**ConfigMap Usage:**
-The Helm chart includes a ConfigMap for managing application configuration. You can customize values in `values.yaml`:
 
 ```
 To upgrade:
